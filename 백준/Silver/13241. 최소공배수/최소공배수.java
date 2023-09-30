@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Main{
+    public static void main(String[] args) throws IOException{
+        new Main().solution();
+    }
+
+    private void solution() throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        Arrays.sort(arr);
+        ArrayList<Long> list = new ArrayList<>();
+        for(int i = 1; i <= arr[0]; i++) {
+        	if(arr[0] % i == 0 && arr[1] % i == 0) {
+        		long x = arr[0] / i;
+        		long y = arr[1] / i;
+        		list.add(x * y * i);
+        	}
+        }
+        Collections.sort(list);
+        System.out.println(list.get(0));
+    }
+}
