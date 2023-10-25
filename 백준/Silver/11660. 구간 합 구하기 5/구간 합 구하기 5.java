@@ -4,7 +4,14 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class Main {
-
+	/*
+	혼자 끄적이다 방법을 찾았다.
+	4 3
+	1 2 3 4 > 1 3 6 10
+	2 3 4 5 > 2 5 9 14 
+	3 4 5 6 > 3 7 12 18
+	4 5 6 7 > 4 9 15 22
+	*/
 	public static void main(String[] args) throws IOException {
 		new Main().solution();
 	}
@@ -58,5 +65,6 @@ public class Main {
 			sb.append(lineResult).append("\n");
 		}
 		System.out.println(sb.toString());
+		// 시간 복잡도 N^2
 	}
 }
