@@ -22,20 +22,18 @@ public class Main {
 			@Override
 			public int compare(Map<Integer, Integer> o1, Map<Integer, Integer> o2) {
 				
-				/* key에는 절대값을 value에는 실제값을 넣는다.
-				 * 
-				 * - 만약 key가 동일하다면 value를 기준으로 정렬한다.
-				 * */
-				
+				// Map<절대값, 실제값>
+                // 만약 key가 동일하다면 value를 기준으로 정렬한다.
 				int o1Key = o1.keySet().iterator().hasNext()?o1.keySet().iterator().next():0;
 				int o2Key = o2.keySet().iterator().hasNext()?o2.keySet().iterator().next():0;
 				
-				if(o1Key == o2Key){ // 음수가 있을 수 도 있다. 
-					return o1.get(o1Key) - o2.get(o2Key);
-//					return Integer.compare(o1.get(o1Key), o2.get(o2Key));
+				if(o1Key == o2Key){  
+                    // 같다면 value를 비교한다.
+					return o1.get(o1Key) - o2.get(o2Key); // 오름차순
+					// return Integer.compare(o1.get(o1Key), o2.get(o2Key));
 				}
 				// 양수
-				return o1Key - o2Key;
+				return o1Key - o2Key; // 오름차순
 				
 			}
 			
@@ -49,11 +47,11 @@ public class Main {
 			
 			if(x == 0){
 				if(queue.isEmpty()){
+                    // 비어있다면 0
 					sb.append("0").append("\n");
 				}else{
 					Map<Integer, Integer> test = queue.poll();
 					int key = test.keySet().iterator().next();
-					
 					sb.append(test.get(key)).append("\n");
 				}
 			}else{
