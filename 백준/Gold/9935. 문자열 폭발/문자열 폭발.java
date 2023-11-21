@@ -12,22 +12,23 @@ public class Main {
 	private void solution() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
-		String[] q = br.readLine().split("");
+		Character[] q = br.readLine().chars().mapToObj(c -> (char)c).toArray(Character[]::new);
 		int qLen = q.length;
-		String[] bomb = br.readLine().split("");
+		Character[] bomb =  br.readLine().chars().mapToObj(c -> (char)c).toArray(Character[]::new);
 		int bombLen = bomb.length;
 		
 		Stack<Character> stack = new Stack<>();
 		
 		for(int i = 0; i < qLen; i++){
-			stack.push(q[i].charAt(0));
-			 
+			
+			stack.push(q[i]);
 			int count = 0;
+			
 			if(stack.size() >= bombLen){
 				
 				for(int j = 0; j < bombLen; j++){
 					
-					if(stack.get(stack.size() - bombLen + j) == bomb[j].charAt(0)){
+					if(stack.get(stack.size() - bombLen + j) == bomb[j]){
 						count++;
 					}
 					
