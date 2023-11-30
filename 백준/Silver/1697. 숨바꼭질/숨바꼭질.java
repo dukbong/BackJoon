@@ -1,53 +1,61 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-    static int N;
-    static int K;
-    static int[] check = new int[100001];
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        K = sc.nextInt();
+	static int[] resultArr = new int[100001];
+	static int[] move = { -1, 1, 2 };
+	static int min;
+	static int max;
 
-        if (N == K) {
-            System.out.println(0);
-        } else {
-            bfs(N);
-        }
-    }
+	public static void main(String[] args) throws IOException {
+		new Main().solution();
+	}
 
-    static void bfs(int num) {
-        Queue<Integer> q = new LinkedList<>();
-        q.add(num);
-        check[num] = 1;
+	private void solution() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int[] len = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		min = len[0];
+		max = len[1];
 
-        while (!q.isEmpty()) {
-            int temp = q.poll();
+		if (min == max) {
+			System.out.println(0);
+		} else {
+			bfs(min);
+		}
 
-            for (int i = 0; i < 3; i++) {
-                int next;
+	}
 
-                if (i == 0) {
-                    next = temp + 1;
-                } else if (i == 1) {
-                    next = temp - 1;
-                } else {
-                    next = temp * 2;
-                }
+	private void bfs(int start) {
 
-                if (next == K) {
-                    System.out.println(check[temp]);
-                    return;
-                }
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(start);
+		resultArr[start] = 1;
 
-                if (next >= 0 && next < check.length && check[next] == 0) {
-                    q.add(next);
-                    check[next] = check[temp] + 1;
-                }
-            }
-        }
-    }
+		while (!queue.isEmpty()) {
+			int now = queue.poll();
+
+			for (int i = 0; i < 3; i++) {
+				int next = 0;
+
+				if (i == 2) {
+					next = now * move[i];
+				} else {
+					next = now + move[i];
+				}
+
+				if (next == max) {
+					System.out.println(resultArr[now]);
+					return;
+				}
+
+				if (next >= 0 && next < resultArr.length && resultArr[next] == 0) {
+					queue.add(next);
+					resultArr[next] = resultArr[now] + 1;
+				}
+			}
+		}
+
+	}
+
 }
