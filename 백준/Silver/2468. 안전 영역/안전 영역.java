@@ -53,9 +53,9 @@ public class Main {
 				}
 			}
 			
-			if(result == 0){
-				break;
-			}
+//			if(result == 0){
+//				break;
+//			}
 			
 //			System.out.println("t = " + t + ", result = " + result);
 			max = Integer.max(result, max);
