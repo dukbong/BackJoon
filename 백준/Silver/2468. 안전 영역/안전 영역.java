@@ -7,8 +7,6 @@ import java.util.Queue;
 
 public class Main {
 
-	// 높이의 1이상 100이하
-	static int rain = 1;
 	static int max = 0;
 
 	static int maxY, maxX;
@@ -26,7 +24,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		maxY = Integer.parseInt(br.readLine());
 		graph = new int[maxY][];
-		
+
 		for (int i = 0; i < maxY; i++) {
 			graph[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 		}
@@ -37,13 +35,13 @@ public class Main {
 		for (int t = 0; t <= 100; t++) {
 
 			rainArea(t);
-			
+
 			boolean[][] tempArea = new boolean[maxY][maxX];
-			
-			for(int i = 0; i < maxY; i++){
+
+			for (int i = 0; i < maxY; i++) {
 				tempArea[i] = visited[i].clone();
 			}
-			
+
 			for (int i = 0; i < maxY; i++) {
 				for (int j = 0; j < maxX; j++) {
 					if (!tempArea[i][j]) {
@@ -52,16 +50,16 @@ public class Main {
 					}
 				}
 			}
-			
-//			if(result == 0){
-//				break;
-//			}
-			
-//			System.out.println("t = " + t + ", result = " + result);
+
+			if (result == 0) {
+				break;
+			}
+
+			// System.out.println("t = " + t + ", result = " + result);
 			max = Integer.max(result, max);
 			result = 0;
 		}
-		
+
 		System.out.println(max);
 	}
 
@@ -81,7 +79,7 @@ public class Main {
 		Queue<int[]> queue = new LinkedList<>();
 		queue.offer(new int[] { y, x });
 		tempArea[y][x] = true;
-		
+
 		while (!queue.isEmpty()) {
 			int[] now = queue.poll();
 
