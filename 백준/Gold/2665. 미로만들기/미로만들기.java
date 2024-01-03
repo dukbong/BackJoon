@@ -6,64 +6,44 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Main {
-	int maxY, maxX;
+	int limit;
 	int[][] graph;
 	int[][] dist;
-	int[] moveY = {-1, 1, 0, 0}, moveX = {0, 0, -1, 1};
-	
+	int[] moveY = { -1, 1, 0, 0 }, moveX = { 0, 0, -1, 1 };
+
 	public static void main(String[] args) throws IOException {
 		new Main().solution();
 	}
 
 	private void solution() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int size = Integer.parseInt(br.readLine());
-		maxY = size; maxX = size;
-		
-		graph = new int[maxY][maxX];
-		dist = new int[maxY][maxX];
-		
-		for(int[] distRow : dist){
-			Arrays.fill(distRow, Integer.MAX_VALUE);
-		}
-		
+		limit = Integer.parseInt(br.readLine());
+		dist = new int[limit][limit];
+		graph = new int[limit][limit];
+		Arrays.stream(dist).forEach(row -> Arrays.fill(row, Integer.MAX_VALUE));
 		dist[0][0] = 0;
-		
-		for(int i = 0; i < maxY; i++){
-			int[] row = Arrays.stream(br.readLine().split("")).mapToInt(Integer::parseInt).toArray();
-			graph[i] = row;
-		}
-		bfs(0,0);
-		
-		System.out.println(dist[size - 1][size - 1]);
-		
+		for (int i = 0; i < limit; i++)
+			graph[i] = Arrays.stream(br.readLine().split("")).mapToInt(Integer::parseInt).toArray();
+		System.out.println(dfs(new int[] { 0, 0 }));
+
 	}
 
-	private void bfs(int y, int x) {
+	private int dfs(int[] start) {
 		Queue<int[]> queue = new LinkedList<>();
-		queue.offer(new int[] { y, x });
-		
-		while(!queue.isEmpty()){
+		queue.offer(start);
+		while (!queue.isEmpty()) {
 			int[] now = queue.poll();
-			
-			for(int i = 0; i < 4; i++){
+			for (int i = 0; i < 4; i++) {
 				int nextY = now[0] + moveY[i];
 				int nextX = now[1] + moveX[i];
-				
-				if(nextY >= 0 && nextX >= 0 && nextY < maxY && nextX < maxX){
-					if(dist[nextY][nextX] > dist[now[0]][now[1]]){
-						if(graph[nextY][nextX] == 1){
-							dist[nextY][nextX] = dist[now[0]][now[1]];
-						}else{
-							dist[nextY][nextX] = dist[now[0]][now[1]] + 1;
-						}
+				if (nextY >= 0 && nextX >= 0 && nextY < limit && nextX < limit) {
+					if (dist[nextY][nextX] > dist[now[0]][now[1]]) {
+						dist[nextY][nextX] = dist[now[0]][now[1]] + (graph[nextY][nextX] == 1 ? 0 : 1);
 						queue.offer(new int[] { nextY, nextX });
 					}
 				}
 			}
 		}
+		return dist[limit - 1][limit - 1];
 	}
-
-
 }
